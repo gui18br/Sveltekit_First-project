@@ -1,4 +1,4 @@
-<h1>Layout</h1>
+<script>import "../app.pcss";</script><h1>Layout</h1>
 <ul>
     <li><a href="/">Inicio</a></li>
     <li><a href="/sobre">Sobre</a></li>
@@ -8,4 +8,4 @@
 </ul>
 
 
-<slot />
+<slot></slot>
