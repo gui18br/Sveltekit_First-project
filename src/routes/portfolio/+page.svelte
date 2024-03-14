@@ -1,36 +1,44 @@
-<script>
+<script lang="ts">
     export let data;
+
+    let currentCategory = 'Todos';
+    let portfolioItems = data.items;
+
+    function changeCategory(newCategory: string) {
+        currentCategory = newCategory;
+        filterPortfolio()
+    }
+
+    function filterPortfolio() {
+        portfolioItems = data.items.filter(item => {
+            return item.category === currentCategory || currentCategory === "Todos";
+        })
+    }
 </script>
 
 <section class="bg-white dark:bg-gray-900">
     <div class="container px-6 py-1 mx-auto">
-
-
         <div class="flex py-4 mt-4 overflow-x-auto overflow-y-hidden md:justify-center dark:border-gray-700">
-            <button
-                class="h-12 px-8 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
-                Animation
-            </button>
 
-            <button
+            {#each data.categories as category}
+            {#if currentCategory === category}
+                <button
+                    class="h-12 px-8 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
+                    {category}
+                </button>
+            {:else}
+                <button on:click={() => changeCategory(category)}
                 class="h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none dark:border-gray-700 dark:hover:border-gray-400 hover:border-gray-400">
-                Web design
-            </button>
+                {category}
+                </button>
+            {/if}
+            {/each}
 
-            <button
-                class="h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none dark:border-gray-700 dark:hover:border-gray-400 hover:border-gray-400">
-                App design
-            </button>
-
-            <button
-                class="h-12 px-8 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-gray-200 sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none dark:border-gray-700 dark:hover:border-gray-400 hover:border-gray-400">
-                Branding
-            </button>
         </div>
 
         <section class="mt-8 space-y-8 lg:mt-12">
 
-            {#each data.items as {title, category, image} }
+            {#each portfolioItems as {title, category, image} }
             <section class="lg:flex lg:items-center">
                 <div class="lg:w-1/2 ">
                     <p class="text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">{category}</p>
